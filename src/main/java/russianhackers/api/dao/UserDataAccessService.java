@@ -21,10 +21,10 @@ public class UserDataAccessService implements UserDao {
 	}
 
 	@Override
-	public int insertUser(UUID id, User user) {
+	public int insertUser(UUID user_id, User user) {
 		jdbcTemplate.update(
-			"INSERT INTO users (id, name, email) VALUES (?, ?, ?)",
-			id, user.getName(), user.getEmail()
+			"INSERT INTO users (user_id, name, email) VALUES (?, ?, ?)",
+				user_id, user.getName(), user.getEmail()
 		);
 
 		return 0;
@@ -32,23 +32,23 @@ public class UserDataAccessService implements UserDao {
 
 	@Override
 	public List<User> selectAllPeople() {
-		final String sql = "SELECT id, name, email FROM users";
+		final String sql = "SELECT user_id, name, email FROM users";
 		return jdbcTemplate.query(sql, (resultSet, i) -> {
-			UUID id = UUID.fromString(resultSet.getString("id"));
+			UUID user_id = UUID.fromString(resultSet.getString("user_id"));
 			String name = resultSet.getString("name");
 			String email = resultSet.getString("email");
-			return new User(id, name, email);
+			return new User(user_id, name, email);
 		});
 	}
 
 	@Override
-	public Optional<User> selectUserById(UUID id) {
-		final String sql = "SELECT id, name, email FROM users WHERE id = ?";
+	public Optional<User> selectUserById(UUID user_id) {
+		final String sql = "SELECT user_id, name, email FROM users WHERE user_id = ?";
 		User user = jdbcTemplate.queryForObject(
 						sql,
-						new Object[]{id},
+						new Object[]{user_id},
 						(resultSet, i) -> {
-							UUID userId = UUID.fromString(resultSet.getString("id"));
+							UUID userId = UUID.fromString(resultSet.getString("user_id"));
 							String name = resultSet.getString("name");
 							String email = resultSet.getString("email");
 							return new User(userId, name, email);
@@ -58,13 +58,13 @@ public class UserDataAccessService implements UserDao {
 	}
 
 	@Override
-	public int deleteUserById(UUID id) {
+	public int deleteUserById(UUID user_id) {
 
 		return 0;
 	}
 
 	@Override
-	public int updateUserById(UUID id, User user) {
+	public int updateUserById(UUID user_id, User user) {
 
 		return 0;
 	}
