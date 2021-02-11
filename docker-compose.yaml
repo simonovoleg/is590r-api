@@ -1,0 +1,14 @@
+version: "3"
+services:
+  database:
+    build: ./db
+    environment:
+      POSTGRES_PASSWORD: russianhackers
+      PG_DATA: /var/lib/postgresql/data/pgdate
+      POSTGRES_DB: test #creates a database called "test"
+    ports:
+      - 5432:5432
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+volumes:
+    database-data:
