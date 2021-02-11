@@ -1,6 +1,6 @@
 app:
   datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/test
-    username: postgres
+    jdbc-url: jdbc:postgresql://localhost:5432/journaldb
+    username: rh
     password: russianhackers
     pool-size: 30

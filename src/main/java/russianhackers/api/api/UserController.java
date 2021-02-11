@@ -41,21 +41,21 @@ public class UserController {
 		return userService.getAllPeople();
 	}
 
-	@GetMapping(path = "{id}" )
-	public User getUserById(@PathVariable("id") UUID id) {
-		return userService.getUserById(id)
+	@GetMapping(path = "{user_id}" )
+	public User getUserById(@PathVariable("user_id") UUID user_id) {
+		return userService.getUserById(user_id)
 						.orElse(null);
 	}
 
-	@DeleteMapping(path="{id}")
-	public void deleteUserById(@PathVariable("id") UUID id) {
-		userService.deleteUser(id);
+	@DeleteMapping(path="{user_id}")
+	public void deleteUserById(@PathVariable("user_id") UUID user_id) {
+		userService.deleteUser(user_id);
 	}
 
-	@PutMapping(path = "{id}")
-	public User updateUserById(@PathVariable("id") UUID id, @Valid @NonNull @RequestBody User userToUpdate) {
-		userService.updateUser(id, userToUpdate);
-		return userService.getUserById(id)
+	@PutMapping(path = "{user_id}")
+	public User updateUserById(@PathVariable("user_id") UUID user_id, @Valid @NonNull @RequestBody User userToUpdate) {
+		userService.updateUser(user_id, userToUpdate);
+		return userService.getUserById(user_id)
 						.orElse(null);
 	}
 

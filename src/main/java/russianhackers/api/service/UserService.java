@@ -29,16 +29,16 @@ public class UserService {
 		return userDao.selectAllPeople();
 	}
 
-	public Optional<User> getUserById(UUID id) {
-		return userDao.selectUserById(id);
+	public Optional<User> getUserById(UUID user_id) {
+		return userDao.selectUserById(user_id);
 	}
 
-	public int deleteUser(UUID id) {
-		return userDao.deleteUserById(id);
+	public int deleteUser(UUID user_id) {
+		return userDao.deleteUserById(user_id);
 	}
 
-	public int updateUser(UUID id, User newUser) {
-		return userDao.updateUserById(id, newUser);
+	public int updateUser(UUID user_id, User newUser) {
+		return userDao.updateUserById(user_id, newUser);
 	}
 
 }
