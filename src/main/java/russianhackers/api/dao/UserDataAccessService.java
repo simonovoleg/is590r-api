@@ -22,6 +22,11 @@ public class UserDataAccessService implements UserDao {
 
 	@Override
 	public int insertUser(UUID id, User user) {
+		jdbcTemplate.update(
+			"INSERT INTO users (id, name, email) VALUES (?, ?, ?)",
+			id, user.getName(), user.getEmail()
+		);
+
 		return 0;
 	}
 
@@ -54,11 +59,13 @@ public class UserDataAccessService implements UserDao {
 
 	@Override
 	public int deleteUserById(UUID id) {
+
 		return 0;
 	}
 
 	@Override
 	public int updateUserById(UUID id, User user) {
+
 		return 0;
 	}
 }

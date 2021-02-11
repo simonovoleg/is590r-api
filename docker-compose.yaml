@@ -3,6 +3,7 @@ services:
   database:
     build: ./db
     environment:
+      POSTGRES_USER: rh
       POSTGRES_PASSWORD: russianhackers
       PG_DATA: /var/lib/postgresql/data/pgdate
       POSTGRES_DB: test #creates a database called "test"
