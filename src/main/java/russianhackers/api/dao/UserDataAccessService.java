@@ -26,7 +26,6 @@ public class UserDataAccessService implements UserDao {
 			"INSERT INTO users (user_id, name, email) VALUES (?, ?, ?)",
 				user_id, user.getName(), user.getEmail()
 		);
-
 		return 0;
 	}
 
@@ -59,13 +58,24 @@ public class UserDataAccessService implements UserDao {
 
 	@Override
 	public int deleteUserById(UUID user_id) {
-
+		// I am not sure if we want to catch exceptions
+		// or to use 500 status code as a signal of a fail on the front end
+		//but for now, here is a try-catch block
+		try {
+			jdbcTemplate.update("delete from users where user_id = ?", user_id);
+		} catch (Exception e) {
+			return 0;
+		}
 		return 0;
 	}
 
 	@Override
 	public int updateUserById(UUID user_id, User user) {
-
+		try {
+			jdbcTemplate.update("update users set name = ?, email = ? where user_id = ?", user.getName(), user.getEmail(), user_id);
+		} catch (Exception e) {
+			return 0;
+		}
 		return 0;
 	}
 }
