@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import russianhackers.api.model.User;
 
-@Repository("postgres")
+@Repository("postgres-user")
 public class UserDataAccessService implements UserDao {
 
 	private final JdbcTemplate jdbcTemplate;
