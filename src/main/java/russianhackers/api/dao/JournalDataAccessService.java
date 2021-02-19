@@ -85,7 +85,7 @@ public class JournalDataAccessService implements JournalDao {
 	@Override
 	public int updateJournalById(UUID journal_id, Journal journal) {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		jdbcTemplate.update("update journals set journal_name = ?, updatedAt = ?", journal.getJournal_name(), timestamp);
+		jdbcTemplate.update("update journals set journal_name = ?, updatedAt = ? where journal_id = ?", journal.getJournal_name(), timestamp, journal_id);
 		return 0;
 	}
 }

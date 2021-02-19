@@ -12,26 +12,20 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS journals (
     journal_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    user_id  UUID NOT NULL,
+    user_id  UUID NOT NULL REFERENCES users ON DELETE CASCADE,
     journal_name VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_user
-        FOREIGN KEY(user_id)
-            REFERENCES users(user_id)
+    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS records (
     record_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    journal_id UUID NOT NULL,
+    journal_id UUID NOT NULL REFERENCES journals ON DELETE CASCADE,
     record_title VARCHAR(100) NOT NULL,
 --    TEXT is a character datatype for variable length
     content TEXT,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_journal
-        FOREIGN KEY(journal_id)
-            REFERENCES journals(journal_id)
+    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 INSERT INTO users (name, email) VALUES

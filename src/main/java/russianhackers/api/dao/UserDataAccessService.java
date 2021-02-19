@@ -53,6 +53,7 @@ public class UserDataAccessService implements UserDao {
 							return new User(userId, name, email);
 						}
 		);
+		//we get 500 status code here if we try to get user by a userid not in the db (has to be valid uuid)
 		return Optional.ofNullable(user);
 	}
 
