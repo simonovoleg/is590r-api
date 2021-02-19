@@ -63,18 +63,18 @@ public class JournalDataAccessService implements JournalDao {
 		return Optional.ofNullable(journal);
 	}
 
-//	@Override //NEEDS WORK
-//	public List<Journal> selectJournalByUserId(UUID user_id) {
-//		final String sql = "SELECT journal_id, user_id, journal_name, createdAt, updatedAt FROM journals";
-//		return jdbcTemplate.query(sql, new Object[]{user_id}, (resultSet, i) -> {
-//			UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
-//			UUID userId = UUID.fromString(resultSet.getString("user_id"));
-//			String journalName = resultSet.getString("journal_name");
-//			Timestamp createdAt = resultSet.getTimestamp("createdAt");
-//			Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
-//			return new Journal(journalId, userId, journalName, createdAt, updatedAt);
-//		});
-//	}
+	@Override //NEEDS WORK
+	public List<Journal> selectJournalByUserId(UUID user_id) {
+		final String sql = "SELECT journal_id, user_id, journal_name, createdAt, updatedAt FROM journals WHERE user_id = ?";
+		return jdbcTemplate.query(sql, new Object[]{user_id}, (resultSet, i) -> {
+			UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
+			UUID userId = UUID.fromString(resultSet.getString("user_id"));
+			String journalName = resultSet.getString("journal_name");
+			Timestamp createdAt = resultSet.getTimestamp("createdAt");
+			Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+			return new Journal(journalId, userId, journalName, createdAt, updatedAt);
+		});
+	}
 
 	@Override
 	public int deleteJournalById(UUID journal_id) {

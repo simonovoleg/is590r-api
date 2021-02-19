@@ -33,9 +33,9 @@ public class JournalService {
 		return journalDao.selectJournalById(journal_id);
 	}
 
-//	public List<Journal> getJournalByUserId(UUID user_id) {
-//		return journalDao.selectJournalByUserId(user_id);
-//	}
+	public List<Journal> getJournalByUserId(UUID user_id) {
+		return journalDao.selectJournalByUserId(user_id);
+	}
 
 	public int deleteJournal(UUID journal_id) {
 		return journalDao.deleteJournalById(journal_id);

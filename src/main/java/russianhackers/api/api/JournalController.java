@@ -46,10 +46,10 @@ public class JournalController {
 						.orElse(null);
 	}
 
-//	@GetMapping(path = "{user_id}" )
-//	public List<Journal> getJournalByUserId(@PathVariable("user_id") UUID user_id) {
-//		return journalService.getJournalByUserId(user_id);
-//	}
+	@GetMapping(path = "/user/{user_id}" )
+	public List<Journal> getJournalByUserId(@PathVariable("user_id") UUID user_id) {
+		return journalService.getJournalByUserId(user_id);
+	}
 
 	@DeleteMapping(path="{journal_id}")
 	public void deleteJournalById(@PathVariable("journal_id") UUID journal_id) {
