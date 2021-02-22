@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,11 +33,13 @@ public class RecordController {
 	}
 
 	@GetMapping(path="/all")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public List<Record> getAllRecords() {
 		return recordService.getAllRecords();
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('record:write')")
 //	public void addRecord(@Valid @NonNull @RequestBody UUID journal_id, @Valid @NonNull @RequestBody Record record) {
 	public void addRecord(@Valid @NonNull @RequestBody Record record) {
 		final UUID journal_id = record.getJournal_id();
@@ -44,27 +47,32 @@ public class RecordController {
 	}
 
 	@GetMapping(path = "/user/{user_id}" )
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public List<Record> getRecordsByUserId(@PathVariable("user_id") UUID user_id) {
 		return recordService.getRecordsByUserId(user_id);
 	}
 
 	@GetMapping(path = "{record_id}" )
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public Record getRecordById(@PathVariable("record_id") UUID record_id) {
 		return recordService.getRecordById(record_id)
 						.orElse(null);
 	}
 
 	@GetMapping(path = "/journal/{journal_id}" )
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public List<Record> getRecordByJournalId(@PathVariable("journal_id") UUID journal_id) {
 		return recordService.getRecordByJournalId(journal_id);
 	}
 
 	@DeleteMapping(path="{record_id}")
+	@PreAuthorize("hasAuthority('record:write')")
 	public void deleteRecordById(@PathVariable("record_id") UUID record_id) {
 		recordService.deleteRecord(record_id);
 	}
 
 	@PutMapping(path = "{record_id}")
+	@PreAuthorize("hasAuthority('record:write')")
 	public Record updateRecordById(@PathVariable("record_id") UUID record_id, @Valid @NonNull @RequestBody Record recordToUpdate) {
 		recordService.updateRecord(record_id, recordToUpdate);
 		return recordService.getRecordById(record_id)

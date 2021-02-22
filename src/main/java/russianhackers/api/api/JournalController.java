@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,32 +32,38 @@ public class JournalController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('journal:write')")
 	public void addJournal(@Valid @NonNull @RequestBody Journal journal) {
 		journalService.addJournal(journal);
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public List<Journal> getAllJournals() {
 		return journalService.getAllJournals();
 	}
 
 	@GetMapping(path = "{journal_id}" )
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public Journal getJournalById(@PathVariable("journal_id") UUID journal_id) {
 		return journalService.getJournalById(journal_id)
 						.orElse(null);
 	}
 
 	@GetMapping(path = "/user/{user_id}" )
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public List<Journal> getJournalByUserId(@PathVariable("user_id") UUID user_id) {
 		return journalService.getJournalByUserId(user_id);
 	}
 
 	@DeleteMapping(path="{journal_id}")
+	@PreAuthorize("hasAuthority('journal:write')")
 	public void deleteJournalById(@PathVariable("journal_id") UUID journal_id) {
 		journalService.deleteJournal(journal_id);
 	}
 
 	@PutMapping(path = "{journal_id}")
+	@PreAuthorize("hasAuthority('journal:write')")
 	public Journal updateJournalById(@PathVariable("journal_id") UUID journal_id, @Valid @NonNull @RequestBody Journal journalToUpdate) {
 		journalService.updateJournal(journal_id, journalToUpdate);
 		return journalService.getJournalById(journal_id)
