@@ -40,7 +40,6 @@ public class RecordController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('record:write')")
-//	public void addRecord(@Valid @NonNull @RequestBody UUID journal_id, @Valid @NonNull @RequestBody Record record) {
 	public void addRecord(@Valid @NonNull @RequestBody Record record) {
 		final UUID journal_id = record.getJournal_id();
 		recordService.addRecord(journal_id, record);
