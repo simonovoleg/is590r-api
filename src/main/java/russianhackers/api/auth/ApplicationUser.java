@@ -1,15 +1,17 @@
 package russianhackers.api.auth;
 
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 public class ApplicationUser implements UserDetails {
 
-//    Build users from this class
+    //    Build users from this class
 
     private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final String password;
@@ -19,20 +21,21 @@ public class ApplicationUser implements UserDetails {
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public ApplicationUser(String username,
-                           String password,
-                           Set<? extends GrantedAuthority> grantedAuthorities,
-                           boolean isAccountNonExpired,
-                           boolean isAccountNonLocked,
-                           boolean isCredentialsNonExpired,
-                           boolean isEnabled) {
-        this.grantedAuthorities = grantedAuthorities;
-        this.password = password;
-        this.username = username;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
+    public ApplicationUser(
+       String username,
+       String password,
+       Set<? extends GrantedAuthority> grantedAuthorities,
+       boolean isAccountNonExpired,
+       boolean isAccountNonLocked,
+       boolean isCredentialsNonExpired,
+       boolean isEnabled) {
+         this.grantedAuthorities = grantedAuthorities;
+         this.password = password;
+         this.username = username;
+         this.isAccountNonExpired = isAccountNonExpired;
+         this.isAccountNonLocked = isAccountNonLocked;
+         this.isCredentialsNonExpired = isCredentialsNonExpired;
+         this.isEnabled = isEnabled;
     }
 
     @Override
