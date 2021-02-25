@@ -36,6 +36,7 @@ public class UserDataAccessService implements UserDao {
 			UUID user_id = UUID.fromString(resultSet.getString("user_id"));
 			String name = resultSet.getString("name");
 			String email = resultSet.getString("email");
+			String username = resultSet.getString("username");
 			return new User(user_id, name, email);
 		});
 	}

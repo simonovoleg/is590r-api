@@ -5,9 +5,16 @@ DROP TABLE IF EXISTS journals;
 DROP TABLE IF EXISTS records;
 
 CREATE TABLE IF NOT EXISTS users (
-    user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL
+     user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+     username VARCHAR(100) NOT NULL,
+     password VARCHAR(100) NOT NULL,
+     name VARCHAR(100) NOT NULL,
+     email VARCHAR(100) NOT NULL,
+     grantedAuthorities TEXT [], --does this array need a specific number of values? i.e. array[4]
+     isAccountNonExpired BOOLEAN NOT NULL DEFAULT TRUE,
+     isAccountNonLocked BOOLEAN NOT NULL DEFAULT TRUE,
+     isCredentialsNonExpired BOOLEAN NOT NULL DEFAULT TRUE,
+     isEnabled BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS journals (
@@ -28,14 +35,15 @@ CREATE TABLE IF NOT EXISTS records (
     updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO users (name, email) VALUES
-('seth', 'seth@gmail.com'),
-('oleg', 'oleg@gmail.com'),
-('misha', 'misha@gmail.com'),
-('ivan', 'ivan@gmail.com');
+INSERT INTO users (user_id, name, email, grantedAuthorities, username, password, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled) VALUES
+('8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'drew', 'drew@gmail.com', '{"ADMIN"}', 'drewski', '$2a$10$NkVEZgTxFQ7DCBW230ZEsu.3Wdm0iZBWsZ8lJS5JSj3Xz4tzYs/jG', true, true, true, true);
+--('seth', 'seth@gmail.com', '{'ADMIN'}', 'sethy', 'password', true, true, true, true),
+--('oleg', 'oleg@gmail.com', '{'READER'}', 'broleg', 'password', true, true, true, true),
+--('misha', 'misha@gmail.com', '{'READER'}', 'mishamisha', 'password', false, true, false, false),
+--('ivan', 'ivan@gmail.com', '{'READER'}', 'ivanko', 'password', true, true, true, true);
 
-INSERT INTO users (user_id, name, email) VALUES
-('8046aac5-1025-41ef-a7b8-a3ba3f266c8d','drew', 'drew@gmail.com');
+--INSERT INTO users (user_id, name, email) VALUES
+--('8046aac5-1025-41ef-a7b8-a3ba3f266c8d','drew', 'drew@gmail.com');
 
 INSERT INTO journals (journal_id, user_id, journal_name)
 VALUES ('7a4b41bb-6824-4404-9beb-ab2ba10a978b', '8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'Full Stack Journal');
