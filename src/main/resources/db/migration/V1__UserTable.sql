@@ -36,14 +36,10 @@ CREATE TABLE IF NOT EXISTS records (
 );
 
 INSERT INTO users (user_id, name, email, role, username, password, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled) VALUES
-('8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'drew', 'drew@gmail.com', 'ADMIN', 'drewski', '$2a$10$NkVEZgTxFQ7DCBW230ZEsu.3Wdm0iZBWsZ8lJS5JSj3Xz4tzYs/jG', true, true, true, true);
---('seth', 'seth@gmail.com', 'ADMIN', 'sethy', 'password', true, true, true, true),
---('oleg', 'oleg@gmail.com', 'READER', 'broleg', 'password', true, true, true, true),
---('misha', 'misha@gmail.com', 'READER', 'mishamisha', 'password', false, true, false, false),
---('ivan', 'ivan@gmail.com', 'READER', 'ivanko', 'password', true, true, true, true);
+('8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'drew christofferson', 'drew@gmail.com', 'READER', 'drew', '$2a$10$NkVEZgTxFQ7DCBW230ZEsu.3Wdm0iZBWsZ8lJS5JSj3Xz4tzYs/jG', true, true, true, true),
+('21caa44c-7b97-11eb-9439-0242ac130002', 'seth erickson', 'seth@gmail.com', 'ADMIN', 'seth', '$2a$10$NkVEZgTxFQ7DCBW230ZEsu.3Wdm0iZBWsZ8lJS5JSj3Xz4tzYs/jG', true, true, true, true),
+('2864fbf4-7b97-11eb-9439-0242ac130002', 'oleg simOnov', 'oleg@gmail.com', null, 'oleg', '$2a$10$NkVEZgTxFQ7DCBW230ZEsu.3Wdm0iZBWsZ8lJS5JSj3Xz4tzYs/jG', true, true, true, true);
 
---INSERT INTO users (user_id, name, email) VALUES
---('8046aac5-1025-41ef-a7b8-a3ba3f266c8d','drew', 'drew@gmail.com');
 
 INSERT INTO journals (journal_id, user_id, journal_name)
 VALUES ('7a4b41bb-6824-4404-9beb-ab2ba10a978b', '8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'Full Stack Journal');

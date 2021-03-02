@@ -5,41 +5,43 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import russianhackers.api.security.ApplicationUserRole;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
+
 
 public class ApplicationUser implements UserDetails {
 
 //    Build users from this class
 
-    private final String role;
-    private final UUID user_id;
-    private final String username;
-    private final String password;
+
+    private final UUID id;
     private final String name;
+    private final String role;
+    private final String password;
     private final String email;
+    private final String username;
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public ApplicationUser(UUID user_id,
+
+    public ApplicationUser(UUID id,
                            String name,
-                           String email,
                            String username,
                            String password,
                            String role,
+                           String email,
                            boolean isAccountNonExpired,
                            boolean isAccountNonLocked,
                            boolean isCredentialsNonExpired,
                            boolean isEnabled) {
-        this.role = role;
-        this.user_id = user_id;
-        this.username = username;
-        this.password = password;
+
+        this.id = id;
         this.name = name;
+        this.role = role;
+        this.password = password;
+        this.username = username;
         this.email = email;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
@@ -62,7 +64,7 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getAuthoritiesForRole(this.getRole());
     }
 
     @Override

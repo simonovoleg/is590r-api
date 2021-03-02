@@ -24,4 +24,5 @@ public interface ApplicationUserDAO {
     int deleteApplicationUserById(UUID user_id);
 
     int updateApplicationUserById(UUID user_id, ApplicationUser user);
+
 }
