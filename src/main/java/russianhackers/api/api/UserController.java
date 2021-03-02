@@ -17,45 +17,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import russianhackers.api.model.User;
-import russianhackers.api.service.UserService;
+import russianhackers.api.auth.ApplicationUser;
+import russianhackers.api.auth.ApplicationUserService;
 
 @RequestMapping("api/v1/user")
 @RestController
 public class UserController {
 
-	private final UserService userService;
+	private final ApplicationUserService applicationUserService;
 
 	@Autowired
-	public UserController(UserService userService) {
-		this.userService = userService;
+	public UserController(ApplicationUserService applicationUserService) {
+		this.applicationUserService = applicationUserService;
 	}
 
 	@PostMapping
-	public void addUser(@Valid @NonNull @RequestBody User user) {
-		userService.addUser(user);
+	public void addUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
+		applicationUserService.addApplicationUser(applicationUser);
 	}
 
 	@GetMapping
-	public List<User> getAllPeople() {
-		return userService.getAllPeople();
+	public List<ApplicationUser> getAllPeople() {
+		return applicationUserService.getAllPeople();
 	}
 
 	@GetMapping(path = "{user_id}" )
-	public User getUserById(@PathVariable("user_id") UUID user_id) {
-		return userService.getUserById(user_id)
+	public ApplicationUser getUserById(@PathVariable("user_id") UUID user_id) {
+		return applicationUserService.getUserById(user_id)
 						.orElse(null);
 	}
 
 	@DeleteMapping(path="{user_id}")
 	public void deleteUserById(@PathVariable("user_id") UUID user_id) {
-		userService.deleteUser(user_id);
+		applicationUserService.deleteApplicationUser(user_id);
 	}
 
 	@PutMapping(path = "{user_id}")
-	public User updateUserById(@PathVariable("user_id") UUID user_id, @Valid @NonNull @RequestBody User userToUpdate) {
-		userService.updateUser(user_id, userToUpdate);
-		return userService.getUserById(user_id)
+	public ApplicationUser updateUserById(@PathVariable("user_id") UUID user_id, @Valid @NonNull @RequestBody ApplicationUser userToUpdate) {
+		applicationUserService.updateApplicationUser(user_id, userToUpdate);
+		return applicationUserService.getUserById(user_id)
 						.orElse(null);
 	}
 
