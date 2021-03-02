@@ -8,21 +8,9 @@ import java.util.UUID;
 
 public interface ApplicationUserDAO {
 
-    int insertApplicationUser (UUID user_id, ApplicationUser applicationUser);
-
-    default int insertApplicationUser (ApplicationUser applicationUser) {
-        UUID user_id = UUID.randomUUID();
-        return insertApplicationUser (user_id, applicationUser);
-    }
-
-    List<ApplicationUser> selectAllPeople();
-
-    Optional<ApplicationUser> selectApplicationUserById(UUID user_id);
+//    int insertApplicationUser (UUID user_id, ApplicationUser applicationUser);
 
     Optional<ApplicationUser> selectApplicationUserByUsername(String username);
 
-    int deleteApplicationUserById(UUID user_id);
-
-    int updateApplicationUserById(UUID user_id, ApplicationUser user);
 
 }

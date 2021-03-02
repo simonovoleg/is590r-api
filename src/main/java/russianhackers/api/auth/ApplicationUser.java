@@ -86,7 +86,7 @@ public class ApplicationUser implements UserDetails {
     }
 
     public UUID getUserid() {
-        return user_id;
+        return id;
     }
 
     @Override

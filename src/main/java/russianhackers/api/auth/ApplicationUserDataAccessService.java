@@ -53,9 +53,9 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
         }
     }
 
-    @Override
-    public ApplicationUser insertUser(ApplicationUser applicationUser) {
-        return null;
-    }
+//    @Override
+//    public int insertUser(ApplicationUser applicationUser) {
+//        return null;
+//    }
 
 }
