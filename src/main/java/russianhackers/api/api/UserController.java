@@ -31,33 +31,33 @@ public class UserController {
 		this.applicationUserService = applicationUserService;
 	}
 
-	@PostMapping
-	public void addUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
-		applicationUserService.addApplicationUser(applicationUser);
-	}
-
-	@GetMapping
-	public List<ApplicationUser> getAllPeople() {
-		return applicationUserService.getAllPeople();
-	}
-
-	@GetMapping(path = "{user_id}" )
-	public ApplicationUser getUserById(@PathVariable("user_id") UUID user_id) {
-		return applicationUserService.getUserById(user_id)
-						.orElse(null);
-	}
-
-	@DeleteMapping(path="{user_id}")
-	public void deleteUserById(@PathVariable("user_id") UUID user_id) {
-		applicationUserService.deleteApplicationUser(user_id);
-	}
-
-	@PutMapping(path = "{user_id}")
-	public ApplicationUser updateUserById(@PathVariable("user_id") UUID user_id, @Valid @NonNull @RequestBody ApplicationUser userToUpdate) {
-		applicationUserService.updateApplicationUser(user_id, userToUpdate);
-		return applicationUserService.getUserById(user_id)
-						.orElse(null);
-	}
+//	@PostMapping
+//	public void addUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
+//		applicationUserService.addApplicationUser(applicationUser);
+//	}
+//
+//	@GetMapping
+//	public List<ApplicationUser> getAllPeople() {
+//		return applicationUserService.getAllPeople();
+//	}
+//
+//	@GetMapping(path = "{user_id}" )
+//	public ApplicationUser getUserById(@PathVariable("user_id") UUID user_id) {
+//		return applicationUserService.getUserById(user_id)
+//						.orElse(null);
+//	}
+//
+//	@DeleteMapping(path="{user_id}")
+//	public void deleteUserById(@PathVariable("user_id") UUID user_id) {
+//		applicationUserService.deleteApplicationUser(user_id);
+//	}
+//
+//	@PutMapping(path = "{user_id}")
+//	public ApplicationUser updateUserById(@PathVariable("user_id") UUID user_id, @Valid @NonNull @RequestBody ApplicationUser userToUpdate) {
+//		applicationUserService.updateApplicationUser(user_id, userToUpdate);
+//		return applicationUserService.getUserById(user_id)
+//						.orElse(null);
+//	}
 
 
 }

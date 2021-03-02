@@ -33,23 +33,4 @@ public class ApplicationUserService implements UserDetailsService {
                         new UsernameNotFoundException(String.format("Username %s not found", username)));
     }
 
-    public int addApplicationUser(ApplicationUser applicationUser) {
-        return applicationUserDAO.insertApplicationUser(applicationUser);
-    }
-
-    public List<ApplicationUser> getAllPeople() {
-        return applicationUserDAO.selectAllPeople();
-    }
-
-    public Optional<ApplicationUser> getUserById(UUID user_id) {
-        return applicationUserDAO.selectApplicationUserById(user_id);
-    }
-
-    public int deleteApplicationUser(UUID user_id) {
-        return applicationUserDAO.deleteApplicationUserById(user_id);
-    }
-
-    public int updateApplicationUser(UUID user_id, ApplicationUser newUser) {
-        return applicationUserDAO.updateApplicationUserById(user_id, newUser);
-    }
 }
