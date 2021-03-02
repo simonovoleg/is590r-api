@@ -38,7 +38,7 @@ public class JournalController {
 	}
 
 	@GetMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public List<Journal> getAllJournals() {
 		return journalService.getAllJournals();
 	}

@@ -3,6 +3,7 @@ package russianhackers.api.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -63,6 +64,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //ant matchers method whitelists certain endpoints that don't require authentication
                 //order does matter
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers(HttpMethod.POST, "api/v1/user").permitAll()
+                .antMatchers(HttpMethod.GET, "api/v1/journal").permitAll()
                 .antMatchers("api/**").hasRole(READER.name())
                 .anyRequest()
                 .authenticated();

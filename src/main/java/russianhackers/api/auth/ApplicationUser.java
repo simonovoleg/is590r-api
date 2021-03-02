@@ -7,9 +7,12 @@ import russianhackers.api.security.ApplicationUserRole;
 
 import java.util.*;
 
+
+
 public class ApplicationUser implements UserDetails {
 
 //    Build users from this class
+
 
     private final UUID id;
     private final String name;
@@ -22,6 +25,7 @@ public class ApplicationUser implements UserDetails {
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
+
     public ApplicationUser(UUID id,
                            String name,
                            String username,
@@ -32,6 +36,7 @@ public class ApplicationUser implements UserDetails {
                            boolean isAccountNonLocked,
                            boolean isCredentialsNonExpired,
                            boolean isEnabled) {
+
         this.id = id;
         this.name = name;
         this.role = role;
@@ -43,7 +48,6 @@ public class ApplicationUser implements UserDetails {
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
     }
-
 
     private static Set<SimpleGrantedAuthority> getAuthoritiesForRole(String role) {
         if (role.equalsIgnoreCase(ApplicationUserRole.ADMIN.toString())) {
@@ -71,6 +75,18 @@ public class ApplicationUser implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UUID getUserid() {
+        return user_id;
     }
 
     @Override
