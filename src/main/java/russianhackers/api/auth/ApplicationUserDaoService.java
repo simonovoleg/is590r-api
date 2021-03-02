@@ -27,8 +27,8 @@ public class ApplicationUserDaoService implements ApplicationUserDAO{
     @Override
     public int insertApplicationUser(UUID user_id, ApplicationUser applicationUser) {
         jdbcTemplate.update(
-                "INSERT INTO users (grantedAuthorities, user_id, username, password, name, email) VALUES (?, ?, ?, ?, ?, ?)",
-                applicationUser.getAuthorities(),
+                "INSERT INTO users (role, user_id, username, password, name, email) VALUES (?, ?, ?, ?, ?, ?)",
+                applicationUser.getRole(),
                 user_id,
                 applicationUser.getUsername(),
                 applicationUser.getPassword(),
@@ -40,19 +40,20 @@ public class ApplicationUserDaoService implements ApplicationUserDAO{
 
     @Override
     public List<ApplicationUser> selectAllPeople() {
-        final String sql = "SELECT user_id, name, password, username, email, grantedAuthorities, isAccountNonExpired,isAccountNonLocked, isCredentialsNonExpired, isEnabled FROM users";
+        final String sql = "SELECT user_id, name, password, username, email, role, isAccountNonExpired,isAccountNonLocked, isCredentialsNonExpired, isEnabled FROM users";
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             UUID user_id = UUID.fromString(resultSet.getString("user_id"));
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
             String username = resultSet.getString("username");
             String password = resultSet.getString("password");
-            Set grantedAuthorities = (Set) resultSet.getArray("grantedAuthorities");
+            //Set grantedAuthorities = (Set) resultSet.getArray("grantedAuthorities");
+            String role = resultSet.getString("role");
             Boolean isAccountNonExpired = resultSet.getBoolean("isAccountNonExpired");
             Boolean isAccountNonLocked = resultSet.getBoolean("isAccountNonLocked");
             Boolean isCredentialsNonExpired = resultSet.getBoolean("isCredentialsNonExpired");
             Boolean isEnabled = resultSet.getBoolean("isEnabled");
-            return new ApplicationUser(user_id, name, email, username, password, grantedAuthorities, isAccountNonExpired, isCredentialsNonExpired, isAccountNonLocked, isEnabled);
+            return new ApplicationUser(user_id, name, email, username, password, role, isAccountNonExpired, isCredentialsNonExpired, isAccountNonLocked, isEnabled);
         });
     }
 

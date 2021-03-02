@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
      password VARCHAR(100) NOT NULL,
      name VARCHAR(100) NOT NULL,
      email VARCHAR(100) NOT NULL,
-     grantedAuthorities TEXT [], --does this array need a specific number of values? i.e. array[4]
+     role TEXT,
      isAccountNonExpired BOOLEAN NOT NULL DEFAULT TRUE,
      isAccountNonLocked BOOLEAN NOT NULL DEFAULT TRUE,
      isCredentialsNonExpired BOOLEAN NOT NULL DEFAULT TRUE,
@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS records (
     updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO users (user_id, name, email, grantedAuthorities, username, password, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled) VALUES
-('8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'drew', 'drew@gmail.com', '{"ADMIN"}', 'drewski', '$2a$10$NkVEZgTxFQ7DCBW230ZEsu.3Wdm0iZBWsZ8lJS5JSj3Xz4tzYs/jG', true, true, true, true);
---('seth', 'seth@gmail.com', '{'ADMIN'}', 'sethy', 'password', true, true, true, true),
---('oleg', 'oleg@gmail.com', '{'READER'}', 'broleg', 'password', true, true, true, true),
---('misha', 'misha@gmail.com', '{'READER'}', 'mishamisha', 'password', false, true, false, false),
---('ivan', 'ivan@gmail.com', '{'READER'}', 'ivanko', 'password', true, true, true, true);
+INSERT INTO users (user_id, name, email, role, username, password, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled) VALUES
+('8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'drew', 'drew@gmail.com', 'ADMIN', 'drewski', '$2a$10$NkVEZgTxFQ7DCBW230ZEsu.3Wdm0iZBWsZ8lJS5JSj3Xz4tzYs/jG', true, true, true, true);
+--('seth', 'seth@gmail.com', 'ADMIN', 'sethy', 'password', true, true, true, true),
+--('oleg', 'oleg@gmail.com', 'READER', 'broleg', 'password', true, true, true, true),
+--('misha', 'misha@gmail.com', 'READER', 'mishamisha', 'password', false, true, false, false),
+--('ivan', 'ivan@gmail.com', 'READER', 'ivanko', 'password', true, true, true, true);
 
 --INSERT INTO users (user_id, name, email) VALUES
 --('8046aac5-1025-41ef-a7b8-a3ba3f266c8d','drew', 'drew@gmail.com');
