@@ -23,6 +23,20 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
     }
 
     @Override
+    public int insertApplicationUser(UUID user_id, ApplicationUser applicationUser) {
+        jdbcTemplate.update(
+                "INSERT INTO users (user_id, username, password, name, email, role) VALUES (?, ?, ?, ?, ?, ?)",
+                user_id,
+                applicationUser.getUsername(),
+                passwordEncoder.encode(applicationUser.getPassword()),
+                applicationUser.getName(),
+                applicationUser.getEmail(),
+                applicationUser.getRole()
+        );
+        return 0;
+    }
+
+    @Override
     public Optional<ApplicationUser> selectApplicationUserByUsername(String username) {
         final String sql = "" +
                 "SELECT user_id, name, username, password, email, role, isEnabled, isAccountNonExpired, isCredentialsNonExpired, isAccountNonLocked " +
@@ -54,8 +68,12 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
     }
 
 //    @Override
-//    public int insertUser(ApplicationUser applicationUser) {
-//        return null;
+//    public int insertUser(UUID user_id, User user) {
+//        jdbcTemplate.update(
+//                "INSERT INTO users (user_id, name, email) VALUES (?, ?, ?)",
+//                user_id, user.getName(), user.getEmail()
+//        );
+//        return 0;
 //    }
 
 }

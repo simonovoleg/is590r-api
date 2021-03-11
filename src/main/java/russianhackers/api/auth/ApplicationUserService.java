@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import russianhackers.api.auth.ApplicationUserDAO;
+import russianhackers.api.model.User;
 
 
 @Service
@@ -32,5 +33,11 @@ public class ApplicationUserService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException(String.format("Username %s not found", username)));
     }
+
+    public int addApplicationUser(ApplicationUser applicationUser) {
+        return applicationUserDAO.insertApplicationUser(applicationUser);
+    }
+
+
 
 }

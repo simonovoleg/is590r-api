@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +32,13 @@ public class UserController {
 		this.applicationUserService = applicationUserService;
 	}
 
-//	@PostMapping
-//	public void addUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
-//		applicationUserService.addApplicationUser(applicationUser);
-//	}
+	@PostMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
+	public void addApplicationUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
+		applicationUserService.addApplicationUser(applicationUser);
+	}
+
+
 //
 //	@GetMapping
 //	public List<ApplicationUser> getAllPeople() {
