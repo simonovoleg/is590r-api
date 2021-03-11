@@ -1,13 +1,15 @@
 package russianhackers.api.api;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.*;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import russianhackers.api.service.JournalService;
 public class JournalController {
 
 	private final JournalService journalService;
+//	private final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 	@Autowired
 	public JournalController(JournalService journalService) {
@@ -38,7 +41,7 @@ public class JournalController {
 	}
 
 	@GetMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public List<Journal> getAllJournals() {
 		return journalService.getAllJournals();
 	}
@@ -52,8 +55,8 @@ public class JournalController {
 
 	@GetMapping(path = "/user/{user_id}" )
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
-	public List<Journal> getJournalByUserId(@PathVariable("user_id") UUID user_id) {
-		return journalService.getJournalByUserId(user_id);
+	public List<Journal> getJournalByUserId(@PathVariable("user_id") UUID user_id, Principal principal) {
+		return journalService.getJournalByUserId(user_id, principal);
 	}
 
 	@DeleteMapping(path="{journal_id}")
