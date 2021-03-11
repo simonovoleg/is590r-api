@@ -1,5 +1,6 @@
 package russianhackers.api.dao;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +20,7 @@ public interface JournalDao {
 
 	Optional<Journal> selectJournalById(UUID journal_id);
 
-	List<Journal> selectJournalByUserId(UUID user_id);
+	List<Journal> selectJournalByUserId(UUID user_id, Principal principal);
 
 	int deleteJournalById(UUID journal_id);
 

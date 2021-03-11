@@ -3,6 +3,7 @@ package russianhackers.api.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,8 +34,8 @@ public class JournalService {
 		return journalDao.selectJournalById(journal_id);
 	}
 
-	public List<Journal> getJournalByUserId(UUID user_id) {
-		return journalDao.selectJournalByUserId(user_id);
+	public List<Journal> getJournalByUserId(UUID user_id, Principal principal) {
+		return journalDao.selectJournalByUserId(user_id, principal);
 	}
 
 	public int deleteJournal(UUID journal_id) {
