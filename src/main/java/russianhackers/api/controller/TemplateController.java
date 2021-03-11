@@ -14,9 +14,4 @@ public class TemplateController {
         return "login";
     }
 
-    @GetMapping("journals")
-    public String getJournals() {
-        //must be the same name as the html file in the resources > templates directory
-        return "journals";
-    }
 }
