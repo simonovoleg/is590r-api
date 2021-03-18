@@ -26,14 +26,26 @@ public class JournalDataAccessService implements JournalDao {
 	}
 
 	@Override
-	public int insertJournal(UUID journal_id, Journal journal) {
+	public Journal insertJournal(UUID journal_id, Journal journal) {
 		final String sql = "INSERT INTO journals (journal_id, user_id, journal_name, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		jdbcTemplate.update(
 				sql,
 				journal_id, journal.getUser_id(), journal.getJournal_name(), timestamp, timestamp
 		);
-		return 0;
+		Journal newJournal = jdbcTemplate.queryForObject(
+			"SELECT * FROM journals WHERE journal_id = ?",
+			new Object[]{journal_id},
+			(resultSet, i) -> {
+				UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
+				UUID userId = UUID.fromString(resultSet.getString("user_id"));
+				String journalName = resultSet.getString("journal_name");
+				Timestamp createdAt = resultSet.getTimestamp("createdAt");
+				Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+				return new Journal(journalId, userId, journalName, createdAt, updatedAt);
+			}
+		);
+		return newJournal;
 	}
 
 	@Override
@@ -108,9 +120,21 @@ public class JournalDataAccessService implements JournalDao {
 	}
 
 	@Override
-	public int updateJournalById(UUID journal_id, Journal journal) {
+	public Journal updateJournalById(UUID journal_id, Journal journal) {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		jdbcTemplate.update("update journals set journal_name = ?, updatedAt = ? where journal_id = ?", journal.getJournal_name(), timestamp, journal_id);
-		return 0;
+		Journal updatedJournal = jdbcTemplate.queryForObject(
+						"SELECT * FROM journals WHERE journal_id = ?",
+						new Object[]{journal_id},
+						(resultSet, i) -> {
+							UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
+							UUID userId = UUID.fromString(resultSet.getString("user_id"));
+							String journalName = resultSet.getString("journal_name");
+							Timestamp createdAt = resultSet.getTimestamp("createdAt");
+							Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+							return new Journal(journalId, userId, journalName, createdAt, updatedAt);
+						}
+		);
+		return updatedJournal;
 	}
 }

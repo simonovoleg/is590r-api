@@ -76,10 +76,10 @@ class JournalControllerTest {
 			.content(TestingUtils.asJsonString(testJournal))
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
-//				.andExpect(jsonPath("$.journal_id").exists())
-//				.andExpect(jsonPath("$.journal_name").value(testJournal.getJournal_name())
-//		);
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.journal_id").exists())
+				.andExpect(jsonPath("$.journal_name").value(testJournal.getJournal_name())
+		);
 	}
 
 	@Test

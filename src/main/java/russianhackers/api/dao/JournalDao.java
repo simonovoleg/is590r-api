@@ -9,9 +9,9 @@ import russianhackers.api.model.Journal;
 
 public interface JournalDao {
 
-	int insertJournal (UUID journal_id, Journal journal);
+	Journal insertJournal (UUID journal_id, Journal journal);
 
-	default int insertJournal (Journal journal) {
+	default Journal insertJournal (Journal journal) {
 		UUID journal_id = UUID.randomUUID();
 		return insertJournal (journal_id, journal);
 	}
@@ -24,5 +24,5 @@ public interface JournalDao {
 
 	int deleteJournalById(UUID journal_id);
 
-	int updateJournalById(UUID journal_id, Journal journal);
+	Journal updateJournalById(UUID journal_id, Journal journal);
 }

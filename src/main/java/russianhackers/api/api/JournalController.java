@@ -36,8 +36,8 @@ public class JournalController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('journal:write')")
-	public void addJournal(@Valid @NonNull @RequestBody Journal journal) {
-		journalService.addJournal(journal);
+	public Journal addJournal(@Valid @NonNull @RequestBody Journal journal) {
+		return journalService.addJournal(journal);
 	}
 
 	@GetMapping

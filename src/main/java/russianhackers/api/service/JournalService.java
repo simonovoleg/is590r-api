@@ -22,7 +22,7 @@ public class JournalService {
 		this.journalDao = journalDao;
 	}
 
-	public int addJournal(Journal journal) {
+	public Journal addJournal(Journal journal) {
 		return journalDao.insertJournal(journal);
 	}
 
@@ -42,7 +42,7 @@ public class JournalService {
 		return journalDao.deleteJournalById(journal_id);
 	}
 
-	public int updateJournal(UUID journal_id, Journal newJournal) {
+	public Journal updateJournal(UUID journal_id, Journal newJournal) {
 		return journalDao.updateJournalById(journal_id, newJournal);
 	}
 
