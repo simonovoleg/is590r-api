@@ -7,8 +7,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
+
+import russianhackers.api.model.Journal;
 
 @Repository("postgres")
 public class ApplicationUserDataAccessService implements ApplicationUserDAO {
@@ -23,7 +26,7 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
     }
 
     @Override
-    public int insertApplicationUser(UUID user_id, ApplicationUser applicationUser) {
+    public ApplicationUser insertApplicationUser(UUID user_id, ApplicationUser applicationUser) {
         jdbcTemplate.update(
                 "INSERT INTO users (user_id, username, password, name, email, role) VALUES (?, ?, ?, ?, ?, ?)",
                 user_id,
@@ -31,9 +34,26 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
                 passwordEncoder.encode(applicationUser.getPassword()),
                 applicationUser.getName(),
                 applicationUser.getEmail(),
-                applicationUser.getRole()
+                "READER"
         );
-        return 0;
+        ApplicationUser newUser = jdbcTemplate.queryForObject(
+        "SELECT * FROM users WHERE user_id = ?",
+            new Object[]{user_id},
+            (resultSet, i) -> {
+                UUID id = UUID.fromString(resultSet.getString("user_id"));
+                String name = resultSet.getString("name");
+                String usernameIn = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+                String role = resultSet.getString("role");
+                Boolean isAccountNonExpired = resultSet.getBoolean("isAccountNonExpired");
+                Boolean isAccountNonLocked = resultSet.getBoolean("isAccountNonLocked");
+                Boolean isCredentialsNonExpired = resultSet.getBoolean("isCredentialsNonExpired");
+                Boolean isEnabled = resultSet.getBoolean("isEnabled");
+                return new ApplicationUser(id, name, usernameIn, password, role, email, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+            }
+        );
+        return newUser;
     }
 
     @Override
@@ -65,6 +85,52 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
         } catch (EmptyResultDataAccessException e) {
             throw new UsernameNotFoundException(String.format("Username %s not found", username));
         }
+    }
+
+    @Override
+    public ApplicationUser updateApplicationUser(UUID user_id, ApplicationUser updatedUser) {
+        jdbcTemplate.update("UPDATE users set name = ?, email = ? where user_id = ?", updatedUser.getName(), updatedUser.getEmail(), user_id);
+        ApplicationUser user = jdbcTemplate.queryForObject(
+            "SELECT * FROM users WHERE user_id = ?",
+            new Object[]{user_id},
+            (resultSet, i) -> {
+                UUID id = UUID.fromString(resultSet.getString("user_id"));
+                String name = resultSet.getString("name");
+                String usernameIn = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+                String role = resultSet.getString("role");
+                Boolean isAccountNonExpired = resultSet.getBoolean("isAccountNonExpired");
+                Boolean isAccountNonLocked = resultSet.getBoolean("isAccountNonLocked");
+                Boolean isCredentialsNonExpired = resultSet.getBoolean("isCredentialsNonExpired");
+                Boolean isEnabled = resultSet.getBoolean("isEnabled");
+                return new ApplicationUser(id, name, usernameIn, password, role, email, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+            }
+        );
+        return user;
+    }
+
+    @Override
+    public ApplicationUser getUserById(UUID user_id) {
+        String sql = "SELECT * FROM users WHERE  user_id = ?";
+        ApplicationUser user = jdbcTemplate.queryForObject(
+            sql,
+            new Object[]{user_id},
+            (resultSet, i) -> {
+                UUID id = UUID.fromString(resultSet.getString("user_id"));
+                String name = resultSet.getString("name");
+                String usernameIn = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+                String role = resultSet.getString("role");
+                Boolean isAccountNonExpired = resultSet.getBoolean("isAccountNonExpired");
+                Boolean isAccountNonLocked = resultSet.getBoolean("isAccountNonLocked");
+                Boolean isCredentialsNonExpired = resultSet.getBoolean("isCredentialsNonExpired");
+                Boolean isEnabled = resultSet.getBoolean("isEnabled");
+                return new ApplicationUser(id, name, usernameIn, password, role, email, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+            }
+        );
+        return user;
     }
 
 //    @Override
