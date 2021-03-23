@@ -22,8 +22,8 @@ public class JournalService {
 		this.journalDao = journalDao;
 	}
 
-	public Journal addJournal(Journal journal) {
-		return journalDao.insertJournal(journal);
+	public Journal addJournal(Journal journal, Principal principal) {
+		return journalDao.insertJournal(journal, principal);
 	}
 
 	public List<Journal> getAllJournals() {

@@ -9,11 +9,11 @@ import russianhackers.api.model.Journal;
 
 public interface JournalDao {
 
-	Journal insertJournal (UUID journal_id, Journal journal);
+	Journal insertJournal (UUID journal_id, Journal journal, Principal principal);
 
-	default Journal insertJournal (Journal journal) {
+	default Journal insertJournal (Journal journal, Principal principal) {
 		UUID journal_id = UUID.randomUUID();
-		return insertJournal (journal_id, journal);
+		return insertJournal (journal_id, journal, principal);
 	}
 
 	List<Journal> selectAllJournals();
