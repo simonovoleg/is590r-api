@@ -20,7 +20,7 @@ public interface JournalDao {
 
 	Optional<Journal> selectJournalById(UUID journal_id);
 
-	List<Journal> selectJournalByUserId(UUID user_id, Principal principal);
+	List<Journal> selectUserJournals(Principal principal);
 
 	int deleteJournalById(UUID journal_id);
 

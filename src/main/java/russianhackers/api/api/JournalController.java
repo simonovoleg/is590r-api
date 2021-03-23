@@ -52,10 +52,10 @@ public class JournalController {
 						.orElse(null);
 	}
 
-	@GetMapping(path = "/user/{user_id}" )
+	@GetMapping(path = "/user" )
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
-	public List<Journal> getJournalByUserId(@PathVariable("user_id") UUID user_id, Principal principal) {
-		return journalService.getJournalByUserId(user_id, principal);
+	public List<Journal> getUserJournals(Principal principal) {
+		return journalService.getUserJournals(principal);
 	}
 
 	@DeleteMapping(path="{journal_id}")

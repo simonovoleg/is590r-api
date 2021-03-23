@@ -80,7 +80,7 @@ public class JournalDataAccessService implements JournalDao {
 	}
 
 	@Override
-	public List<Journal> selectJournalByUserId(UUID user_id, Principal principal) {
+	public List<Journal> selectUserJournals(Principal principal) {
 		final ApplicationUser applicationUser = jdbcTemplate.queryForObject(
 				"SELECT * FROM users WHERE username = ?", new Object[]{principal.getName()},
 				(resultSet, i) -> {
@@ -99,18 +99,20 @@ public class JournalDataAccessService implements JournalDao {
 		);
 		//TODO: check if admin and allow if admin
 
-//		final String sql = "SELECT journal_id, user_id, journal_name, createdAt, updatedAt FROM journals WHERE user_id = ?";
 		final String sql = "SELECT j.journal_id, j.user_id, j.journal_name, j.createdAt, j.updatedAt " +
-							"FROM journals j JOIN users u ON j.user_id = u.user_id WHERE j.user_id = ? AND u.username = ?";
-		return jdbcTemplate.query(sql, new Object[]{user_id, applicationUser.getUsername()}, (resultSet, i) -> {
-			UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
-			UUID userId = UUID.fromString(resultSet.getString("user_id"));
-			String journalName = resultSet.getString("journal_name");
-			Timestamp createdAt = resultSet.getTimestamp("createdAt");
-			Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
-			return new Journal(journalId, userId, journalName, createdAt, updatedAt);
-
-		});
+							"FROM journals j JOIN users u ON j.user_id = u.user_id WHERE u.username = ?";
+		return jdbcTemplate.query(
+			sql,
+			new Object[]{applicationUser.getUsername()},
+			(resultSet, i) -> {
+				UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
+				UUID userId = UUID.fromString(resultSet.getString("user_id"));
+				String journalName = resultSet.getString("journal_name");
+				Timestamp createdAt = resultSet.getTimestamp("createdAt");
+				Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+				return new Journal(journalId, userId, journalName, createdAt, updatedAt);
+			}
+		);
 	}
 
 	@Override
