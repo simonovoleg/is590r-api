@@ -29,7 +29,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public ApplicationUser addApplicationUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
 		return applicationUserService.addApplicationUser(applicationUser);
 	}

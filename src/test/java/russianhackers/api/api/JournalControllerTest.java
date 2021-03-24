@@ -31,7 +31,6 @@ import russianhackers.api.utils.TestingUtils;
 class JournalControllerTest {
 
 	private MockMvc mvc;
-//	@Autowired
 	private WebApplicationContext context;
 
 	@Autowired
