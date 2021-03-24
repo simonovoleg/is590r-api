@@ -10,7 +10,7 @@ import static russianhackers.api.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
     ADMIN(Sets.newHashSet(JOURNAL_READ, JOURNAL_WRITE, RECORD_READ, RECORD_WRITE)),
-    READER(Sets.newHashSet(JOURNAL_READ, RECORD_READ));
+    READER(Sets.newHashSet(JOURNAL_READ, RECORD_READ, JOURNAL_WRITE, RECORD_WRITE));
 
     private final Set<ApplicationUserPermission> permissions;
 

@@ -26,12 +26,29 @@ public class JournalDataAccessService implements JournalDao {
 	}
 
 	@Override
-	public Journal insertJournal(UUID journal_id, Journal journal) {
+	public Journal insertJournal(UUID journal_id, Journal journal, Principal principal) {
+		final ApplicationUser applicationUser = jdbcTemplate.queryForObject(
+						"SELECT * FROM users WHERE username = ?", new Object[]{principal.getName()},
+						(resultSet, i) -> {
+							UUID id = UUID.fromString(resultSet.getString("user_id"));
+							String name = resultSet.getString("name");
+							String username = resultSet.getString("username");
+							String password = resultSet.getString("password");
+							String email = resultSet.getString("email");
+							String role = resultSet.getString("role");
+							Boolean isAccountNonExpired = resultSet.getBoolean("isAccountNonExpired");
+							Boolean isAccountNonLocked = resultSet.getBoolean("isAccountNonLocked");
+							Boolean isCredentialsNonExpired = resultSet.getBoolean("isCredentialsNonExpired");
+							Boolean isEnabled = resultSet.getBoolean("isEnabled");
+							return new ApplicationUser(id, name, username, password, role, email, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+						}
+		);
+
 		final String sql = "INSERT INTO journals (journal_id, user_id, journal_name, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)";
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		jdbcTemplate.update(
 				sql,
-				journal_id, journal.getUser_id(), journal.getJournal_name(), timestamp, timestamp
+				journal_id, applicationUser.getUserid(), journal.getJournal_name(), timestamp, timestamp
 		);
 		Journal newJournal = jdbcTemplate.queryForObject(
 			"SELECT * FROM journals WHERE journal_id = ?",
@@ -80,7 +97,7 @@ public class JournalDataAccessService implements JournalDao {
 	}
 
 	@Override
-	public List<Journal> selectJournalByUserId(UUID user_id, Principal principal) {
+	public List<Journal> selectUserJournals(Principal principal) {
 		final ApplicationUser applicationUser = jdbcTemplate.queryForObject(
 				"SELECT * FROM users WHERE username = ?", new Object[]{principal.getName()},
 				(resultSet, i) -> {
@@ -99,18 +116,20 @@ public class JournalDataAccessService implements JournalDao {
 		);
 		//TODO: check if admin and allow if admin
 
-//		final String sql = "SELECT journal_id, user_id, journal_name, createdAt, updatedAt FROM journals WHERE user_id = ?";
 		final String sql = "SELECT j.journal_id, j.user_id, j.journal_name, j.createdAt, j.updatedAt " +
-							"FROM journals j JOIN users u ON j.user_id = u.user_id WHERE j.user_id = ? AND u.username = ?";
-		return jdbcTemplate.query(sql, new Object[]{user_id, applicationUser.getUsername()}, (resultSet, i) -> {
-			UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
-			UUID userId = UUID.fromString(resultSet.getString("user_id"));
-			String journalName = resultSet.getString("journal_name");
-			Timestamp createdAt = resultSet.getTimestamp("createdAt");
-			Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
-			return new Journal(journalId, userId, journalName, createdAt, updatedAt);
-
-		});
+							"FROM journals j JOIN users u ON j.user_id = u.user_id WHERE u.username = ?";
+		return jdbcTemplate.query(
+			sql,
+			new Object[]{applicationUser.getUsername()},
+			(resultSet, i) -> {
+				UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
+				UUID userId = UUID.fromString(resultSet.getString("user_id"));
+				String journalName = resultSet.getString("journal_name");
+				Timestamp createdAt = resultSet.getTimestamp("createdAt");
+				Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+				return new Journal(journalId, userId, journalName, createdAt, updatedAt);
+			}
+		);
 	}
 
 	@Override
