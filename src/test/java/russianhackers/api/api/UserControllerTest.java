@@ -64,5 +64,7 @@ class UserControllerTest {
 //			.andExpect(jsonPath("$.user_id").exists())
 //			.andExpect(jsonPath("$.name").value(testUser.getName())
 //		);
+
+		//COMMENT TO DELETE LATER
 	}
 }
