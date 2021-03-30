@@ -30,7 +30,7 @@ jobs:
 
       - name: Build with MVN
         env:
-          APP_DATASOURCE_JDBC_URL: ${{ secrets.DB_HOST }}
+          APP_DATASOURCE_JDBC-URL: ${{ secrets.DB_HOST }}
           APP_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
           APP_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
           APP_JWT_SECRETKEY: ${{ secrets.JWT_SECRET_KEY }}

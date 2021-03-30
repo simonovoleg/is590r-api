@@ -1,11 +1,11 @@
 app:
   datasource:
-    jdbc-url: ${APP_DATASOURCE_JDBC_URL}
-    username: ${APP_DATASOURCE_USERNAME}
-    password: ${APP_DATASOURCE_PASSWORD}
+    jdbc-url: jdbc:postgresql://localhost:5432/journaldb
+    username: rh
+    password: russianhackers
     pool-size: 30
 application:
   jwt:
-    secretKey: ${APP_JWT_SECRETKEY}
+    secretKey: securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure
     tokenPrefix: Bearer
     tokenExpirationAfterDays: 10
