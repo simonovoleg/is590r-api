@@ -28,6 +28,27 @@ jobs:
         with: 
           java-version: '11'
 
+      - name: Find and Replace DB URL
+          uses: jacobtomlinson/gha-find-replace@master
+          with:
+            find: "jdbc-url: jdbc:postgresql://localhost:5432/journaldb"
+            replace: ${{ secrets.DB_HOST }}
+            include: "application.yaml"
+
+      - name: Find and Replace DB USERNAME
+          uses: jacobtomlinson/gha-find-replace@master
+          with:
+            find: "username: rh"
+            replace: ${{ secrets.DB_USERNAME }}
+            include: "application.yaml"
+
+      - name: Find and Replace DB PASSWORD
+          uses: jacobtomlinson/gha-find-replace@master
+          with:
+            find: "password: russianhackers"
+            replace: ${{ secrets.DB_PASSWORD }}
+            include: "application.yaml"
+
       - name: Build with MVN
         env:
           APP_DATASOURCE_JDBC-URL: ${{ secrets.DB_HOST }}
