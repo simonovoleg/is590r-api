@@ -1,9 +1,9 @@
 spring:
   datasource:
-    username: postgres
+    username: rh
     password: russianhackers
     pool-size: 30
-    jdbc-url: jdbc:postgresql://database-1.cbi3srzfdqnu.us-east-1.rds.amazonaws.com:5432/
+    jdbc-url: jdbc:postgresql://localhost:5432/journaldb
 #    data-source-class-name: org.postgresql.ds.PGSimpleDataSource
 #    serverName: database-1.cbi3srzfdqnu.us-east-1.rds.amazonaws.com
 #    connectionTimeout: 30000
