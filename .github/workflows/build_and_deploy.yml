@@ -33,7 +33,7 @@ jobs:
         with:
           find: "jdbc:postgresql://localhost:5432/journaldb"
           replace: ${{ secrets.DB_HOST }}
-          include: "application.yaml"
+          include: "src/main/resources/application.yaml"
 
       - name: Find and Replace DB USERNAME
         uses: jacobtomlinson/gha-find-replace@master
