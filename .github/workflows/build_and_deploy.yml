@@ -31,21 +31,21 @@ jobs:
       - name: Find and Replace DB URL
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "jdbc-url: jdbc:postgresql://localhost:5432/journaldb"
+          find: "jdbc:postgresql://localhost:5432/journaldb"
           replace: ${{ secrets.DB_HOST }}
           include: "application.yaml"
 
       - name: Find and Replace DB USERNAME
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "username: rh"
+          find: "rh"
           replace: ${{ secrets.DB_USERNAME }}
           include: "application.yaml"
 
       - name: Find and Replace DB PASSWORD
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          find: "password: russianhackers"
+          find: "russianhackers"
           replace: ${{ secrets.DB_PASSWORD }}
           include: "application.yaml"
 
