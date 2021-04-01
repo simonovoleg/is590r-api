@@ -11,7 +11,7 @@ import com.zaxxer.hikari.HikariDataSource;
 public class PostgresDatasource {
 
 	@Bean
-	@ConfigurationProperties("app.datasource")
+	@ConfigurationProperties("spring.datasource")
 	public HikariDataSource hikariDataSource() {
 		return DataSourceBuilder
 						.create()
