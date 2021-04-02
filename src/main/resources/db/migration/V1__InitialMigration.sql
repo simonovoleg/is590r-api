@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS records;
 
 CREATE TABLE IF NOT EXISTS users (
      user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-     username VARCHAR(100) NOT NULL,
+     username VARCHAR(100) NOT NULL UNIQUE,
      password VARCHAR(100) NOT NULL,
      name VARCHAR(100) NOT NULL,
      email VARCHAR(100) NOT NULL,

@@ -16,8 +16,6 @@ public interface JournalDao {
 		return insertJournal (journal_id, journal, principal);
 	}
 
-	List<Journal> selectAllJournals();
-
 	Optional<Journal> selectJournalById(UUID journal_id);
 
 	List<Journal> selectUserJournals(Principal principal);

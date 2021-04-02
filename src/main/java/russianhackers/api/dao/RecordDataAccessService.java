@@ -22,23 +22,6 @@ public class RecordDataAccessService implements RecordDao {
 	}
 
 	@Override
-	public List<Record> selectAllRecords() {
-		final String sql = "SELECT record_id, journal_id, record_title, content, createdAt, updatedAt FROM records";
-		return jdbcTemplate.query(
-			sql,
-			(resultSet, i) -> {
-				UUID recordId = UUID.fromString(resultSet.getString("record_id"));
-				UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
-				String recordTitle = resultSet.getString("record_title");
-				String recordContent = resultSet.getString("content");
-				Timestamp createdAt = resultSet.getTimestamp("createdAt");
-				Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
-				return new Record(recordId, journalId, recordTitle, recordContent, createdAt, updatedAt);
-			}
-		);
-	}
-
-	@Override
 	public int insertRecord(UUID journal_id, UUID record_id, Record record) {
 		final String sql = "INSERT INTO records (record_id, journal_id, record_title, content, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)";
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -50,28 +33,7 @@ public class RecordDataAccessService implements RecordDao {
 	}
 
 	@Override
-	public List<Record> selectRecordsByUserId(UUID user_id) {
-		final String sql = "SELECT records.record_id, records.journal_id, records.record_title, records.content, records.createdAt, records.updatedAt "
-						 + "FROM records JOIN journals ON records.journal_id = journals.journal_id "
-						 + "WHERE journals.user_id = ?";
-
-		return jdbcTemplate.query(
-			sql,
-			new Object[]{user_id},
-			(resultSet, i) -> {
-				UUID recordId = UUID.fromString(resultSet.getString("record_id"));
-				UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
-				String recordTitle = resultSet.getString("record_title");
-				String recordContent = resultSet.getString("content");
-				Timestamp createdAt = resultSet.getTimestamp("createdAt");
-				Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
-				return new Record(recordId, journalId, recordTitle, recordContent, createdAt, updatedAt);
-			}
-		);
-	}
-
-	@Override //NEEDS WORK
-	public List<Record> selectRecordByJournalId(UUID journal_id)  {
+	public List<Record> selectRecordsByJournalId(UUID journal_id)  {
 		final String sql = "SELECT record_id, journal_id, record_title, content, createdAt, updatedAt FROM records WHERE journal_id = ?";
 		return jdbcTemplate.query(
 			sql,

@@ -16,13 +16,9 @@ public interface RecordDao {
 		return insertRecord (journal_id, record_id, record);
 	}
 
-	List<Record> selectAllRecords();
-
 	Optional<Record> selectRecordById(UUID record_id);
 
-	List<Record> selectRecordsByUserId(UUID user_id);
-
-	List<Record> selectRecordByJournalId(UUID journal_id);
+	List<Record> selectRecordsByJournalId(UUID journal_id);
 
 	int deleteRecordById(UUID record_id);
 

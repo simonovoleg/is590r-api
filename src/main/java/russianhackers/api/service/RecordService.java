@@ -26,20 +26,12 @@ public class RecordService {
 		return recordDao.insertRecord(journal_id, record);
 	}
 
-	public List<Record> getAllRecords() {
-		return recordDao.selectAllRecords();
-	}
-
-	public List<Record> getRecordsByUserId(UUID user_id) {
-		return recordDao.selectRecordsByUserId(user_id);
-	}
-
 	public Optional<Record> getRecordById(UUID record_id) {
 		return recordDao.selectRecordById(record_id);
 	}
 
-	public List<Record> getRecordByJournalId(UUID journal_id) {
-		return recordDao.selectRecordByJournalId(journal_id);
+	public List<Record> getRecordsByJournalId(UUID journal_id) {
+		return recordDao.selectRecordsByJournalId(journal_id);
 	}
 
 	public int deleteRecord(UUID record_id) {
