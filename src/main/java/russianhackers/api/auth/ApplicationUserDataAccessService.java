@@ -34,7 +34,7 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
                 passwordEncoder.encode(applicationUser.getPassword()),
                 applicationUser.getName(),
                 applicationUser.getEmail(),
-                "READER"
+                "ADMIN"
         );
         ApplicationUser newUser = jdbcTemplate.queryForObject(
         "SELECT * FROM users WHERE user_id = ?",
