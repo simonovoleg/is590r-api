@@ -41,27 +41,6 @@ class RecordControllerTest {
 						.build();
 	}
 
-//	@Test
-//	@DisplayName("Should Add a New Record")
-//	public void itShouldAddNewRecord() throws Exception {
-//		var record = new Record(
-//						UUID.randomUUID(),
-//						UUID.fromString("7a4b41bb-6824-4404-9beb-ab2ba10a978b"),
-//						"Test Record",
-//						"Blah blah blah",
-//						null,
-//						null
-//		);
-//
-//		this.mvc.perform(post("/api/v1/record")
-//						.content(TestingUtils.asJsonString(record))
-//						.contentType(MediaType.APPLICATION_JSON)
-//						.accept(MediaType.APPLICATION_JSON))
-//						.andExpect(status().isOk());
-//	}
-//
-//	//eeac4832-86b7-4436-aeb5-15baa9c3572e
-
 	@Test
 	@DisplayName("Should Add a New Record and Then Delete It")
 	public void shouldCreateThenDeleteRecord() throws Exception {
@@ -74,12 +53,21 @@ class RecordControllerTest {
 						null
 		);
 
-		this.mvc.perform(post("/api/v1/record")
-						.content(TestingUtils.asJsonString(record))
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON))
-						.andExpect(status().isOk());
+		var rec = this.mvc.perform(post("/api/v1/record")
+			.content(TestingUtils.asJsonString(record))
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andReturn();
 
+		var result = rec.getResponse().getContentAsString();
+
+		try {
+			this.mvc.perform(get("/api/v1/record/8046aac5-1025-41ef-a7b8-a3ba3f266c8d"))
+				.andExpect(status().isOk());
+		} catch (Exception e) {
+
+		}
 
 
 		this.mvc.perform(delete("/api/v1/record/" + "8046aac5-1025-41ef-a7b8-a3ba3f266c8d"))
@@ -87,24 +75,49 @@ class RecordControllerTest {
 						);
 	}
 
-//	@Test
-//	@DisplayName("Should Update a Record by ID")
-//	public void shouldGetRecordById() throws Exception {
-//		var id = "0c5d1a97-f77a-4206-87f6-f268038a992a";
-//		var updatedRecord = new Record(
-//						null,
-//						null,
-//						"Updated Test Record Title",
-//						"updated content",
-//						null,
-//						null
-//		);
-//
-//		this.mvc.perform(put("/api/v1/record/" + id)
-//						.content(TestingUtils.asJsonString(updatedRecord))
-//						.contentType(MediaType.APPLICATION_JSON))
-//						.andExpect(status().isOk());
-//	}
+	@Test
+	@DisplayName("Should Update a Record by ID")
+	public void shouldGetRecordById() throws Exception {
+		var id = "8046aac5-1025-41ef-a7b8-a3ba3f266c8d";
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+		try {
+			var record = new Record(
+							UUID.fromString(id),
+							UUID.fromString("7a4b41bb-6824-4404-9beb-ab2ba10a978b"),
+							"Test Record",
+							"Blah blah blah",
+							timestamp,
+							timestamp
+			);
+
+			this.mvc.perform(post("/api/v1/record")
+							.content(TestingUtils.asJsonString(record))
+							.contentType(MediaType.APPLICATION_JSON)
+							.accept(MediaType.APPLICATION_JSON))
+							.andExpect(status().isOk());
+
+
+			var uRecord = "{\"record_title\":\"Updated Test Record Title\", \"content\":\"Updated Content\"}";
+
+			this.mvc.perform(put("/api/v1/record/" + id)
+//							.content(TestingUtils.asJsonString(updatedRecord))
+							.content(uRecord)
+							.contentType(MediaType.APPLICATION_JSON))
+							.andExpect(status().isOk());
+		} catch (Exception e) {
+			var error = e;
+		}
+	}
+
+	@Test
+	@DisplayName("Should Get All Records In a Journal")
+	public void shouldGetJournalRecords() throws Exception {
+		var id = "7a4b41bb-6824-4404-9beb-ab2ba10a978b";
+		this.mvc.perform(get("/api/v1/record/journal/" + id)
+						.contentType(MediaType.APPLICATION_JSON))
+						.andExpect(status().isOk());
+	}
 
 
 }

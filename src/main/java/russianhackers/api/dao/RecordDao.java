@@ -9,9 +9,9 @@ import russianhackers.api.model.Record;
 
 public interface RecordDao {
 
-	int insertRecord (UUID journal_id, UUID record_id, Record record);
+	Record insertRecord (UUID journal_id, UUID record_id, Record record);
 
-	default int insertRecord (UUID journal_id, Record record) {
+	default Record insertRecord (UUID journal_id, Record record) {
 		UUID record_id = UUID.randomUUID();
 		return insertRecord (journal_id, record_id, record);
 	}
@@ -22,5 +22,5 @@ public interface RecordDao {
 
 	int deleteRecordById(UUID record_id);
 
-	int updateRecordById(UUID record_id, Record record);
+	Record updateRecordById(UUID record_id, Record record);
 }

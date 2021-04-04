@@ -59,3 +59,5 @@ join journals j
 on u.user_id = j.user_id
 join records r
 on r.journal_id = j.journal_id;
+
+select * from records;

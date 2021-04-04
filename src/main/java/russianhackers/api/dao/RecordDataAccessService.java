@@ -22,14 +22,27 @@ public class RecordDataAccessService implements RecordDao {
 	}
 
 	@Override
-	public int insertRecord(UUID journal_id, UUID record_id, Record record) {
+	public Record insertRecord(UUID journal_id, UUID record_id, Record record) {
 		final String sql = "INSERT INTO records (record_id, journal_id, record_title, content, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)";
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		jdbcTemplate.update(
 				sql,
 				record_id, journal_id, record.getRecord_title(), record.getContent(), timestamp, timestamp
 		);
-		return 0;
+
+		Record newRecord = jdbcTemplate.queryForObject(
+		"SELECT * FROM records WHERE record_id = ?",
+						new Object[]{record_id},
+						(resultSet, i) -> {
+							UUID recordId = UUID.fromString(resultSet.getString("record_id"));
+							UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
+							String recordTitle = resultSet.getString("record_title");
+							String recordContent = resultSet.getString("content");
+							Timestamp createdAt = resultSet.getTimestamp("createdAt");
+							Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+							return new Record(recordId, journalId, recordTitle, recordContent, createdAt, updatedAt);
+						});
+		return newRecord;
 	}
 
 	@Override
@@ -76,10 +89,23 @@ public class RecordDataAccessService implements RecordDao {
 	}
 
 	@Override
-	public int updateRecordById(UUID record_id, Record record) {
+	public Record updateRecordById(UUID record_id, Record record) {
 		final Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		final String sql = "update records set record_title = ?, content = ?, updatedAt = ? where record_id = ?";
 		jdbcTemplate.update(sql, record.getRecord_title(), record.getContent(), timestamp, record_id);
-		return 0;
+		Record newRecord = jdbcTemplate.queryForObject(
+						sql,
+						new Object[]{record_id},
+						(resultSet, i) -> {
+							UUID recordId = UUID.fromString(resultSet.getString("record_id"));
+							UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
+							String recordTitle = resultSet.getString("record_title");
+							String recordContent = resultSet.getString("content");
+							Timestamp createdAt = resultSet.getTimestamp("createdAt");
+							Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+							return new Record(recordId, journalId, recordTitle, recordContent, createdAt, updatedAt);
+						}
+		);
+		return newRecord;
 	}
 }

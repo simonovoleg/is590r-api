@@ -22,7 +22,7 @@ public class RecordService {
 		this.recordDao = recordDao;
 	}
 
-	public int addRecord(UUID journal_id, Record record) {
+	public Record addRecord(UUID journal_id, Record record) {
 		return recordDao.insertRecord(journal_id, record);
 	}
 
@@ -38,7 +38,7 @@ public class RecordService {
 		return recordDao.deleteRecordById(record_id);
 	}
 
-	public int updateRecord(UUID record_id, Record newRecord) {
+	public Record updateRecord(UUID record_id, Record newRecord) {
 		return recordDao.updateRecordById(record_id, newRecord);
 	}
 
