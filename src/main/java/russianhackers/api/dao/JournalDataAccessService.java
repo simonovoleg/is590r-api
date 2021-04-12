@@ -66,19 +66,6 @@ public class JournalDataAccessService implements JournalDao {
 	}
 
 	@Override
-	public List<Journal> selectAllJournals() {
-		final String sql = "SELECT journal_id, user_id, journal_name, createdAt, updatedAt FROM journals";
-		return jdbcTemplate.query(sql, (resultSet, i) -> {
-			UUID journalId = UUID.fromString(resultSet.getString("journal_id"));
-			UUID userId = UUID.fromString(resultSet.getString("user_id"));
-			String journalName = resultSet.getString("journal_name");
-			Timestamp createdAt = resultSet.getTimestamp("createdAt");
-			Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
-			return new Journal(journalId, userId, journalName, createdAt, updatedAt);
-		});
-	}
-
-	@Override
 	public Optional<Journal> selectJournalById(UUID journal_id) {
 		final String sql = "SELECT journal_id, user_id, journal_name, createdAt, updatedAt FROM journals WHERE journal_id = ?";
 		Journal journal = jdbcTemplate.queryForObject(
@@ -114,7 +101,6 @@ public class JournalDataAccessService implements JournalDao {
 					return new ApplicationUser(id, name, username, password, role, email, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
 				}
 		);
-		//TODO: check if admin and allow if admin
 
 		final String sql = "SELECT j.journal_id, j.user_id, j.journal_name, j.createdAt, j.updatedAt " +
 							"FROM journals j JOIN users u ON j.user_id = u.user_id WHERE u.username = ?";

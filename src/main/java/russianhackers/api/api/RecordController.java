@@ -32,23 +32,11 @@ public class RecordController {
 		this.recordService = recordService;
 	}
 
-	@GetMapping(path="/all")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
-	public List<Record> getAllRecords() {
-		return recordService.getAllRecords();
-	}
-
 	@PostMapping
 	@PreAuthorize("hasAuthority('record:write')")
 	public void addRecord(@Valid @NonNull @RequestBody Record record) {
 		final UUID journal_id = record.getJournal_id();
 		recordService.addRecord(journal_id, record);
-	}
-
-	@GetMapping(path = "/user/{user_id}" )
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
-	public List<Record> getRecordsByUserId(@PathVariable("user_id") UUID user_id) {
-		return recordService.getRecordsByUserId(user_id);
 	}
 
 	@GetMapping(path = "{record_id}" )
@@ -60,8 +48,8 @@ public class RecordController {
 
 	@GetMapping(path = "/journal/{journal_id}" )
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
-	public List<Record> getRecordByJournalId(@PathVariable("journal_id") UUID journal_id) {
-		return recordService.getRecordByJournalId(journal_id);
+	public List<Record> getRecordsByJournalId(@PathVariable("journal_id") UUID journal_id) {
+		return recordService.getRecordsByJournalId(journal_id);
 	}
 
 	@DeleteMapping(path="{record_id}")
@@ -77,6 +65,4 @@ public class RecordController {
 		return recordService.getRecordById(record_id)
 						.orElse(null);
 	}
-
-
 }

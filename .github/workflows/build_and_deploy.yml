@@ -40,14 +40,14 @@ jobs:
         with:
           find: "rh"
           replace: ${{ secrets.DB_USERNAME }}
-          include: "application.yaml"
+          include: "src/main/resources/application.yaml"
 
       - name: Find and Replace DB PASSWORD
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: "russianhackers"
           replace: ${{ secrets.DB_PASSWORD }}
-          include: "application.yaml"
+          include: "src/main/resources/application.yaml"
 
       - name: Build with MVN
         env:

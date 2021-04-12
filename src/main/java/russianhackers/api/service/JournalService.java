@@ -26,10 +26,6 @@ public class JournalService {
 		return journalDao.insertJournal(journal, principal);
 	}
 
-	public List<Journal> getAllJournals() {
-		return journalDao.selectAllJournals();
-	}
-
 	public Optional<Journal> getJournalById(UUID journal_id) {
 		return journalDao.selectJournalById(journal_id);
 	}

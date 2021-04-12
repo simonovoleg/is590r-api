@@ -41,12 +41,6 @@ public class JournalController {
 		return journalService.addJournal(journal, principal);
 	}
 
-	@GetMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public List<Journal> getAllJournals() {
-		return journalService.getAllJournals();
-	}
-
 	@GetMapping(path = "{journal_id}" )
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public Journal getJournalById(@PathVariable("journal_id") UUID journal_id) {
