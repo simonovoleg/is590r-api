@@ -44,11 +44,11 @@ INSERT INTO users (user_id, name, email, role, username, password, isAccountNonE
 INSERT INTO journals (journal_id, user_id, journal_name)
 VALUES ('7a4b41bb-6824-4404-9beb-ab2ba10a978b', '8046aac5-1025-41ef-a7b8-a3ba3f266c8d', 'Full Stack Journal');
 
-INSERT INTO records (journal_id, record_title, content) VALUES
-('7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'Day One','I am learning how to pronounced Olegs name'),
-('7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'Day Two', 'Seth and Oleg go hunting together'),
-('7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'The Russian Hacker', 'The rh is upon us...'),
-('7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'Day Five', 'Project is completed in only five days. #goodone');
+INSERT INTO records (record_id, journal_id, record_title, content) VALUES
+('23d769ba-1882-4c8a-9951-3efe85545d63', '7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'Day One','I am learning how to pronounced Olegs name'),
+('d32ab7c6-3830-4c5c-9f4c-4a968cd5b35b', '7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'Day Two', 'Seth and Oleg go hunting together'),
+('c07c5ff5-6720-4343-94c0-8a41c5f0f9a7', '7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'The Russian Hacker', 'The rh is upon us...'),
+('f188e2c1-2ab0-419b-8058-447bd222ef46', '7a4b41bb-6824-4404-9beb-ab2ba10a978b', 'Day Five', 'Project is completed in only five days. #goodone');
 
 
 --Run this query to check for correct configuration of the database--

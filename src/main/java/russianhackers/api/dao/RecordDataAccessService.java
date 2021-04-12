@@ -94,7 +94,7 @@ public class RecordDataAccessService implements RecordDao {
 		final String sql = "update records set record_title = ?, content = ?, updatedAt = ? where record_id = ?";
 		jdbcTemplate.update(sql, record.getRecord_title(), record.getContent(), timestamp, record_id);
 		Record newRecord = jdbcTemplate.queryForObject(
-						sql,
+						"SELECT * FROM records WHERE record_id = ?",
 						new Object[]{record_id},
 						(resultSet, i) -> {
 							UUID recordId = UUID.fromString(resultSet.getString("record_id"));
