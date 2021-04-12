@@ -55,7 +55,7 @@ jobs:
           APP_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
           APP_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
           APP_JWT_SECRETKEY: ${{ secrets.JWT_SECRET_KEY }}
-        run: mvn -B clean package --file pom.xml
+        run: mvn -B clean package --file pom.xml -DskipTests
 
       - name: Dockerize
         run: docker build -t journalapp:latest .
