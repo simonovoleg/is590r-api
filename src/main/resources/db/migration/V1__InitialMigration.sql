@@ -1,8 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS journals;
-DROP TABLE IF EXISTS records;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS journals;
+-- DROP TABLE IF EXISTS records;
 
 CREATE TABLE IF NOT EXISTS users (
      user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
