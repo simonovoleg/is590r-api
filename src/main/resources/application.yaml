@@ -4,12 +4,6 @@ spring:
     password: russianhackers
     pool-size: 30
     jdbc-url: jdbc:postgresql://localhost:5432/journaldb
-#    data-source-class-name: org.postgresql.ds.PGSimpleDataSource
-#    serverName: database-1.cbi3srzfdqnu.us-east-1.rds.amazonaws.com
-#    connectionTimeout: 30000
-#    portNumber: 5432
-#    databaseName: journaldb
-#    driver-class-name: org.postgresql.Driver
 application:
   name: russianhackers
   jwt:

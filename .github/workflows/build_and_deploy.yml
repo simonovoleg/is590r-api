@@ -40,14 +40,14 @@ jobs:
         with:
           find: "rh"
           replace: ${{ secrets.DB_USERNAME }}
-          include: "application.yaml"
+          include: "src/main/resources/application.yaml"
 
       - name: Find and Replace DB PASSWORD
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: "russianhackers"
           replace: ${{ secrets.DB_PASSWORD }}
-          include: "application.yaml"
+          include: "src/main/resources/application.yaml"
 
       - name: Build with MVN
         env:
@@ -55,7 +55,7 @@ jobs:
           APP_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
           APP_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
           APP_JWT_SECRETKEY: ${{ secrets.JWT_SECRET_KEY }}
-        run: mvn -B clean package --file pom.xml -DskipTests
+        run: mvn -B clean package --file pom.xml
 
       - name: Dockerize
         run: docker build -t journalapp:latest .

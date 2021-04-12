@@ -1,4 +1,4 @@
-app:
+spring:
   datasource:
     jdbc-url: jdbc:tc:postgresql:13.1:///journaldb
     username: rh

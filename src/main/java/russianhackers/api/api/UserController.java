@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,7 @@ public class UserController {
 	}
 
 	@PostMapping
-//	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public ApplicationUser addApplicationUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
 		return applicationUserService.addApplicationUser(applicationUser);
 	}
@@ -39,6 +40,5 @@ public class UserController {
 		applicationUserService.updateApplicationUser(user_id, userToUpdate);
 		return applicationUserService.getUserById(user_id);
 	}
-
 
 }
