@@ -1,9 +1,10 @@
 package russianhackers.api.security;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,14 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import russianhackers.api.auth.ApplicationUserService;
 import russianhackers.api.jwt.JwtConfig;
 import russianhackers.api.jwt.JwtTokenVerifier;
 import russianhackers.api.jwt.JwtUsernameAndPasswordAuthenticationFilter;
-
-import javax.crypto.SecretKey;
-
-import static russianhackers.api.security.ApplicationUserRole.*;
 
 @Configuration
 @EnableWebSecurity
@@ -46,36 +44,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //csrf method to create and send cookies
-                //prevents man in the middle attacks
-                //use csrf for any requests that will be processed by browsers
-//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) //cookies inaccessible to client side scripts
-//                .and()
-                //comment out the line below when using an actual client (not postman)
-                .csrf().disable()
-                //jwt is stateless
-                .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                //the authenticationManager method comes from the WebSecurityConfiguererAdapter
-                //and handles the auth for jwts
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-                .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                //ant matchers method whitelists certain endpoints that don't require authentication
-                //order does matter
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers(HttpMethod.POST, "api/v1/user").permitAll()
-                .antMatchers(HttpMethod.GET, "api/v1/journal").permitAll()
-                .antMatchers("api/**").hasRole(READER.name())
-                .anyRequest()
-                .authenticated();
-
-                //formbased auth
-//                .and()
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .defaultSuccessUrl("/journals", true);
+                        .csrf().disable()
+                        .sessionManagement()
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        .and()
+                        .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+                        .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
+                        .authorizeRequests()
+                        .anyRequest()
+                        .authenticated();
     }
 
     @Override
