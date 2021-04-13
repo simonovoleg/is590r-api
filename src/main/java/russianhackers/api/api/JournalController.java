@@ -69,7 +69,6 @@ public class JournalController {
 	}
 
 	@GetMapping(path = "/hc")
-	@PreAuthorize("permitAll()")
 	public String checkHealth() {
 		return "OK";
 	}

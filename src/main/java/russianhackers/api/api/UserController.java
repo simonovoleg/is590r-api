@@ -31,7 +31,6 @@ public class UserController {
 	}
 
 	@PostMapping
-	@PreAuthorize("permitAll()")
 	public ApplicationUser addApplicationUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
 		return applicationUserService.addApplicationUser(applicationUser);
 	}
