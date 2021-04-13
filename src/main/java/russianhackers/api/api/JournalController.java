@@ -4,11 +4,13 @@ import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,5 +68,8 @@ public class JournalController {
 						.orElse(null);
 	}
 
-
+	@GetMapping(path = "/hc")
+	public String checkHealth() {
+		return "OK";
+	}
 }

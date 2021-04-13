@@ -2,6 +2,7 @@ package russianhackers.api.api;
 
 import java.util.UUID;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ public class UserController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_READER')")
 	public ApplicationUser addApplicationUser(@Valid @NonNull @RequestBody ApplicationUser applicationUser) {
 		return applicationUserService.addApplicationUser(applicationUser);
 	}
