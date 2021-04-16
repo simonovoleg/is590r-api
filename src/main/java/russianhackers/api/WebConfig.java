@@ -2,16 +2,17 @@ package russianhackers.api;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
 @Configuration
-public class CorsConfig {
-	public WebMvcConfigurer corsConfigure() {
-		return new WebMvcConfigurerAdapter() {
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**");
-			}
-		};
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+	public WebConfig() {
+	}
+	@Override
+	public void addCorsMappings(CorsRegistry corsRegistry) {
+		corsRegistry.addMapping("/**")
+						.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
 	}
 }
