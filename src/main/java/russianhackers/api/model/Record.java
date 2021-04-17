@@ -3,17 +3,23 @@ package russianhackers.api.model;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Record {
 
 	private final UUID record_id;
 	private final UUID journal_id;
-	//	private final UUID user_id; //should this be included?
 	private final String record_title;
 	private final String content;
 	private final Timestamp createdAt;
 	private final Timestamp updatedAt;
 
-	public Record(UUID record_id, UUID journal_id, String record_title, String content, Timestamp createdAt, Timestamp updatedAt) {
+	public Record(@JsonProperty("record_id") UUID record_id,
+				  @JsonProperty("journal_id") UUID journal_id,
+				  @JsonProperty("record_title") String record_title,
+				  @JsonProperty("content") String content,
+				  @JsonProperty("createdAt") Timestamp createdAt,
+				  @JsonProperty("updatedAt") Timestamp updatedAt) {
 		this.record_id = record_id;
 		this.journal_id = journal_id;
 		this.record_title = record_title;

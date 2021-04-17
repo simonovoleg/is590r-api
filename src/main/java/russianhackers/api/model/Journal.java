@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Journal {
 	private final UUID journal_id;
 	private final UUID user_id;
-
 	private final String journal_name;
 	private final Timestamp createdAt;
 	private final Timestamp updatedAt;

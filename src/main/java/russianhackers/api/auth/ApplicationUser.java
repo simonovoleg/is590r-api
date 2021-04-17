@@ -7,7 +7,7 @@ import russianhackers.api.security.ApplicationUserRole;
 
 import java.util.*;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ApplicationUser implements UserDetails {
 
@@ -26,16 +26,17 @@ public class ApplicationUser implements UserDetails {
     private final boolean isEnabled;
 
 
-    public ApplicationUser(UUID id,
-                           String name,
-                           String username,
-                           String password,
-                           String role,
-                           String email,
-                           boolean isAccountNonExpired,
-                           boolean isAccountNonLocked,
-                           boolean isCredentialsNonExpired,
-                           boolean isEnabled) {
+    public ApplicationUser(
+                    @JsonProperty("user_id") UUID id,
+                    @JsonProperty("name") String name,
+                    @JsonProperty("username") String username,
+                    @JsonProperty("password") String password,
+                    @JsonProperty("role") String role,
+                    @JsonProperty("email") String email,
+                    @JsonProperty("isAccountNonExpired") boolean isAccountNonExpired,
+                    @JsonProperty("isAccountNonLocked") boolean isAccountNonLocked,
+                    @JsonProperty("isCredentialsNonExpired") boolean isCredentialsNonExpired,
+                    @JsonProperty("isEnabled") boolean isEnabled) {
 
         this.id = id;
         this.name = name;
