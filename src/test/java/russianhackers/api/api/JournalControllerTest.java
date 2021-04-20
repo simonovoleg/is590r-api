@@ -128,4 +128,11 @@ class JournalControllerTest {
 			.andExpect(jsonPath("$.journal_name").value(updatedJournal.getJournal_name())
 		);
 	}
+
+	@Test
+	@DisplayName("Should Return 200 on Health Check")
+	public void shouldHealthCheck() throws Exception {
+		this.mvc.perform(get("/api/v1/journal/hc"))
+						.andExpect(status().isOk());
+	}
 }

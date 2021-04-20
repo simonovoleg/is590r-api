@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import russianhackers.api.auth.ApplicationUser;
 import russianhackers.api.model.Journal;
-import russianhackers.api.model.User;
 
 @Repository("postgres-journal")
 public class JournalDataAccessService implements JournalDao {

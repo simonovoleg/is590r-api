@@ -1,13 +1,8 @@
 package russianhackers.api.auth;
 
-import russianhackers.api.model.User;
-
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import org.apache.catalina.core.ApplicationContext;
 
 public interface ApplicationUserDAO {
 
