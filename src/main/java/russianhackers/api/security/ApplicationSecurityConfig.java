@@ -81,7 +81,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://devjournalapp.s3.amazonaws.com", "https://devjournal.link"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://devjournalapp.s3.amazonaws.com", "https://devjournal.link", "https://your.devjournal.link"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH"));
         // When using setAllowCredentials(true), we cannot use '*' as the allowed origin header
         configuration.setAllowCredentials(true);
