@@ -3,6 +3,7 @@ package russianhackers.api.api;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
@@ -58,6 +59,14 @@ class UserControllerTest {
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON))
 						.andExpect(status().is5xxServerError());
+	}
+
+	@Test
+	@DisplayName("Should Return Current Logged In User")
+	public void itShouldReturnCurrentApplicationUser() throws Exception {
+		this.mvc.perform(get("/api/v1/user/")
+						.accept(MediaType.APPLICATION_JSON))
+						.andExpect(status().isOk());
 	}
 
 }

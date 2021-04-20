@@ -1,5 +1,6 @@
 package russianhackers.api.auth;
 
+import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,4 +36,7 @@ public class ApplicationUserService implements UserDetailsService {
     public ApplicationUser updateApplicationUser(UUID user_id, ApplicationUser updatedUser) { return applicationUserDAO.updateApplicationUser(user_id, updatedUser); }
 
     public ApplicationUser getUserById(UUID user_id) { return applicationUserDAO.getUserById(user_id);}
+
+    public ApplicationUser getApplicationUser(Principal principal) { return applicationUserDAO.getApplicationUser(principal);}
+
 }

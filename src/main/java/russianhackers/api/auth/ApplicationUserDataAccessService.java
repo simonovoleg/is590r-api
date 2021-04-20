@@ -6,8 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import java.security.Principal;
 
-import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -133,13 +133,26 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
         return user;
     }
 
-//    @Override
-//    public int insertUser(UUID user_id, User user) {
-//        jdbcTemplate.update(
-//                "INSERT INTO users (user_id, name, email) VALUES (?, ?, ?)",
-//                user_id, user.getName(), user.getEmail()
-//        );
-//        return 0;
-//    }
-
+    @Override
+    public ApplicationUser getApplicationUser(Principal principal) {
+        String username = principal.getName();
+        String sql = "SELECT * FROM users WHERE username = ?";
+        return jdbcTemplate.queryForObject(
+            sql,
+            new Object[]{username},
+            (resultSet, i) -> {
+                UUID id = UUID.fromString(resultSet.getString("user_id"));
+                String name = resultSet.getString("name");
+                String usernameIn = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+                String role = resultSet.getString("role");
+                Boolean isAccountNonExpired = resultSet.getBoolean("isAccountNonExpired");
+                Boolean isAccountNonLocked = resultSet.getBoolean("isAccountNonLocked");
+                Boolean isCredentialsNonExpired = resultSet.getBoolean("isCredentialsNonExpired");
+                Boolean isEnabled = resultSet.getBoolean("isEnabled");
+                return new ApplicationUser(id, name, usernameIn, password, role, email, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+            }
+        );
+    }
 }
