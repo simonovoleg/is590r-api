@@ -2,6 +2,7 @@ package russianhackers.api.auth;
 
 import russianhackers.api.model.User;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,4 +23,6 @@ public interface ApplicationUserDAO {
     ApplicationUser updateApplicationUser(UUID user_id, ApplicationUser updatedUser);
 
     ApplicationUser getUserById(UUID user_id);
+
+    ApplicationUser getApplicationUser(Principal principal);
 }

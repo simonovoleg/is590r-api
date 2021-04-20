@@ -1,5 +1,6 @@
 package russianhackers.api.api;
 
+import java.security.Principal;
 import java.util.UUID;
 
 import javax.annotation.security.PermitAll;
@@ -41,4 +42,8 @@ public class UserController {
 		return applicationUserService.getUserById(user_id);
 	}
 
+	@GetMapping
+	public ApplicationUser getApplicationUser(Principal principal) {
+		return applicationUserService.getApplicationUser(principal);
+	}
 }
