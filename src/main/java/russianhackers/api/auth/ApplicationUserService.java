@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import russianhackers.api.model.ReturnUser;
+
 @Service
 public class ApplicationUserService implements UserDetailsService {
 
@@ -37,6 +39,6 @@ public class ApplicationUserService implements UserDetailsService {
 
     public ApplicationUser getUserById(UUID user_id) { return applicationUserDAO.getUserById(user_id);}
 
-    public ApplicationUser getApplicationUser(Principal principal) { return applicationUserDAO.getApplicationUser(principal);}
+    public ReturnUser getApplicationUser(Principal principal) { return applicationUserDAO.getApplicationUser(principal);}
 
 }

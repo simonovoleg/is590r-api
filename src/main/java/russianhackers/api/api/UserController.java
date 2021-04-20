@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import russianhackers.api.auth.ApplicationUser;
 import russianhackers.api.auth.ApplicationUserService;
+import russianhackers.api.model.ReturnUser;
 
 @RequestMapping("api/v1/user")
 @RestController
@@ -43,7 +44,7 @@ public class UserController {
 	}
 
 	@GetMapping
-	public ApplicationUser getApplicationUser(Principal principal) {
+	public ReturnUser getApplicationUser(Principal principal) {
 		return applicationUserService.getApplicationUser(principal);
 	}
 }

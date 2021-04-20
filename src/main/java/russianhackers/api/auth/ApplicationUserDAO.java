@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
+import russianhackers.api.model.ReturnUser;
+
 public interface ApplicationUserDAO {
 
     ApplicationUser insertApplicationUser(UUID user_id, ApplicationUser applicationUser);
@@ -19,5 +21,5 @@ public interface ApplicationUserDAO {
 
     ApplicationUser getUserById(UUID user_id);
 
-    ApplicationUser getApplicationUser(Principal principal);
+    ReturnUser getApplicationUser(Principal principal);
 }

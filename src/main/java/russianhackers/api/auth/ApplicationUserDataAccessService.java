@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import russianhackers.api.model.Journal;
+import russianhackers.api.model.ReturnUser;
 
 @Repository("postgres")
 public class ApplicationUserDataAccessService implements ApplicationUserDAO {
@@ -134,25 +135,20 @@ public class ApplicationUserDataAccessService implements ApplicationUserDAO {
     }
 
     @Override
-    public ApplicationUser getApplicationUser(Principal principal) {
+    public ReturnUser getApplicationUser(Principal principal) {
         String username = principal.getName();
         String sql = "SELECT * FROM users WHERE username = ?";
-        return jdbcTemplate.queryForObject(
+        ReturnUser user = jdbcTemplate.queryForObject(
             sql,
             new Object[]{username},
             (resultSet, i) -> {
                 UUID id = UUID.fromString(resultSet.getString("user_id"));
                 String name = resultSet.getString("name");
                 String usernameIn = resultSet.getString("username");
-                String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
-                String role = resultSet.getString("role");
-                Boolean isAccountNonExpired = resultSet.getBoolean("isAccountNonExpired");
-                Boolean isAccountNonLocked = resultSet.getBoolean("isAccountNonLocked");
-                Boolean isCredentialsNonExpired = resultSet.getBoolean("isCredentialsNonExpired");
-                Boolean isEnabled = resultSet.getBoolean("isEnabled");
-                return new ApplicationUser(id, name, usernameIn, password, role, email, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+                return new ReturnUser(id, name, usernameIn, email);
             }
         );
+        return user;
     }
 }
